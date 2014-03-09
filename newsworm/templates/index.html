@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>{{title}}</title>
+</head>
+<body>
+	<div id="title">{{title}}</div>
+	<hr>
+	<div id="content">
+
+		{% for content_item in content %}
+		<div class="content_item">
+			<div class="content_href"><a href="{{content_item.link}}">{{content_item.title}}</a></div>
+			<div class="content_fetched">date retrieved: {{content_item.time_scraped}}</div>
+		</div>
+		<br>
+		{% endfor %}
+
+	</div><!-- #content -->
+</body>
+</html>

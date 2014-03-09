@@ -1,0 +1,5 @@
+requests
+lxml
+flask
+flask-sqlalchemy
+sqlalchemy

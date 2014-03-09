@@ -1,6 +1,6 @@
 import datetime
-from newsworm import app
-from newsworm.models import Content
+from config import app
+from models import Content
 from flask import render_template
 from sqlalchemy import desc
 

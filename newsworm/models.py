@@ -1,4 +1,4 @@
-from newsworm import db
+from config import db
 
 class Content(db.Model):
 	'''

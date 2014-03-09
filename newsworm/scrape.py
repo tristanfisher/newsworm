@@ -44,8 +44,8 @@ def save_to_database(content_item):
 	'''
 	save a title, link, and timestamp to a database
 	'''
-	from newsworm import db
-	from newsworm.models import Content
+	from config import db
+	from models import Content
 
 	content_insert = Content(
 		title = content_item['title'],

@@ -13,7 +13,7 @@ install_requirements = [str(ir.req) for ir in install_requirements]
 
 setup(
 	name = 'newsworm',
-	version = 0.01,
+	version = 0.02,
 	author = 'Tristan Fisher',
 	author_email = 'code@tristanfisher.com',
 	description = "scrape html and save links to a database for future consumption",

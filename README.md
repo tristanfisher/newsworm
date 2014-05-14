@@ -29,12 +29,5 @@ Runs a simple Flask application that renders the content saved by `scrape.py` in
  - Getting the top story currently requests the whole page/tree.  This is not necessary and is wasteful (could make a request for N-bytes)
 
  - Support other news/link sources.
- 
- - If the top story hasn't changed since the last run of scrape.py, display this in a counter in the output.  
- 	e.g. 
-
- 	[Eye-catching Celebrity Story](#) [2]
-
- 	[Information you Should Know](#)
 
  - Store content in GMT. Leave it to the view to decide the timezone

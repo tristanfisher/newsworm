@@ -44,6 +44,7 @@ def scrape():
 		#methods are needed to scrape a myriad of sources
 		top_story_dict = {
 			'title': top_story_item[0].text,
+			'repeat_count' : None,
             'image': top_story_image,
 			'link': top_story_item[1].text,
 			'time_scraped': datetime.datetime.now()
@@ -60,6 +61,7 @@ def save_to_database(content_item):
 
 	content_insert = Content(
 		title = content_item['title'],
+		repeat_count = content_item['repeat_count'],
 		image = content_item['image'],
 		link = content_item['link'],
 		time_scraped = content_item['time_scraped']
@@ -67,14 +69,29 @@ def save_to_database(content_item):
 
 	_db_session = db.session
 
-	last_insert = _db_session.execute("select max(id), title from Content").first()
+	last_insert = _db_session.execute("select max(id), title, repeat_count from Content").first()
+	last_insert_id = last_insert.values()[0]
 	last_insert_title = last_insert.values()[1]
+	last_insert_repeat_count = last_insert.values()[2]
+
+	#_db_session.query(Content).filter_by(id=last_insert_id).update({"title": last_insert_title + "[repeat]"})
+	#_db_session.commit()
 
 	if last_insert_title == content_insert.title:
+		if last_insert_repeat_count is None: last_insert_repeat_count = 0
+		content_insert.repeat_count  = int(last_insert_repeat_count + 1)
+		_db_session.query(Content).filter_by(id=last_insert_id).update({"repeat_count": content_insert.repeat_count})
 		if DEBUG: print "Content was the same from last run, not storing content again."
 	else:
 		_db_session.add(content_insert)
+
+	try:
 		_db_session.commit()
+	except:
+		_db_session.rollback()
+		raise
+	finally:
+		_db_session.close()
 
 if __name__ == '__main__':
 	save_to_database(scrape())

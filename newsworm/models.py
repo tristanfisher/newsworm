@@ -8,6 +8,7 @@ class Content(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String)
+	repeat_count = db.Column(db.Integer)
 	image = db.Column(db.String)
 	link = db.Column(db.String)
 	time_scraped = db.Column(db.DateTime)

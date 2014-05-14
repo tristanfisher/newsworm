@@ -3,4 +3,3 @@ lxml
 flask
 flask-sqlalchemy
 sqlalchemy
-psycopg2

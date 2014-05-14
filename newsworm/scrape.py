@@ -2,6 +2,7 @@ import datetime
 import requests
 from lxml import etree
 from BeautifulSoup import BeautifulSoup
+from config import DEBUG
 
 def scrape():
 	'''
@@ -64,8 +65,16 @@ def save_to_database(content_item):
 		time_scraped = content_item['time_scraped']
 	)
 
-	db.session.add(content_insert)
-	db.session.commit()
+	_db_session = db.session
+
+	last_insert = _db_session.execute("select max(id), title from Content").first()
+	last_insert_title = last_insert.values()[1]
+
+	if last_insert_title == content_insert.title:
+		if DEBUG: print "Content was the same from last run, not storing content again."
+	else:
+		_db_session.add(content_insert)
+		_db_session.commit()
 
 if __name__ == '__main__':
 	save_to_database(scrape())

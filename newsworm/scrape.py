@@ -10,7 +10,13 @@ def scrape():
 	'''
 	#using RSS so we're thriftier and don't need to parse html
 	content_url = 'http://news.google.com/news/url?output=rss'
-	content = requests.get(content_url)
+
+	try: content = requests.get(content_url)
+	except requests.ConnectionError : print("Error loading :: {0}".format(content_url))
+	except requests.Timeout : print("Timed out :: {0}".format(content_url))
+	except requests.HTTPError : print("Invalid HTTP response :: {0}".format(content_url))
+	except requests.TooManyRedirects: print("Too many redirects :: {0}".format(content_url))
+
 
 	#expecting xml response.  json and html scraping options would be a todo.
 	if 'application/xml' in content.headers['content-type']:

@@ -24,7 +24,6 @@ Runs a simple Flask application that renders the content saved by `scrape.py` in
 
 
 ######TODO:
- - Add error handling (e.g. check response code for http get)
 
  - Getting the top story currently requests the whole page/tree.  This is not necessary and is wasteful (could make a request for N-bytes)
 

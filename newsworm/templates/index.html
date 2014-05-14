@@ -10,8 +10,12 @@
 
 		{% for content_item in content %}
 		<div class="content_item">
-			<div class="content_href"><a href="{{content_item.link}}">{{content_item.title}}</a></div>
-			<div class="content_fetched">date retrieved: {{content_item.time_scraped}}</div>
+            <div class="content_image"><img src="{{content_item.image}}"></div>
+            <div class="content_text">
+                <div class="content_href"><a href="{{content_item.link}}">{{content_item.title}}</a></div>
+                <p>
+                <div class="content_fetched">date retrieved: {{content_item.time_scraped}}</div>
+            </div>
 		</div>
 		<br>
 		{% endfor %}

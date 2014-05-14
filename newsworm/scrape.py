@@ -1,6 +1,7 @@
 import datetime
 import requests
 from lxml import etree
+from BeautifulSoup import BeautifulSoup
 
 def scrape():
 	'''
@@ -29,11 +30,20 @@ def scrape():
 
 		top_story_item = content_xml[0].find('item')
 		top_story_item = top_story_item.getchildren()
+		top_story_image = BeautifulSoup(top_story_item[-1].text).find('img')
+		#grab the first attribute, then the value for the img tag
+		#(u'src', u'//t2.gstatic.com/images?q=tbn:ANd9GcRbKgR....)
+		top_story_image =  top_story_image.attrs[0][1]
+
+		#if image starts with //, prefix it with http
+		if top_story_image.startswith('//'):
+			top_story_image = 'http:' + top_story_image
 
 		#This could be an object, but I don't see the need until different
 		#methods are needed to scrape a myriad of sources
 		top_story_dict = {
 			'title': top_story_item[0].text,
+            'image': top_story_image,
 			'link': top_story_item[1].text,
 			'time_scraped': datetime.datetime.now()
 		}
@@ -49,6 +59,7 @@ def save_to_database(content_item):
 
 	content_insert = Content(
 		title = content_item['title'],
+		image = content_item['image'],
 		link = content_item['link'],
 		time_scraped = content_item['time_scraped']
 	)
@@ -58,4 +69,3 @@ def save_to_database(content_item):
 
 if __name__ == '__main__':
 	save_to_database(scrape())
-

@@ -35,6 +35,11 @@ div.content_item{
 	border-width:.1em;
 }
 
+div.content_text,div.content_image{
+    display:inline-block;
+    clear:both;
+}
+
 div.content_fetched{
 	font: .88em Consolas, monaco, monospace;
 	padding-left:3em;
